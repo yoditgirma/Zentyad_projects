@@ -13,8 +13,11 @@ def register_user(request):
             data = json.loads(request.body)
 
             username = data.get("username")
+            first_name = data.get("first_name")
+            last_name = data.get("last_name")
             email = data.get("email")
             password = data.get("password")
+            confirm_password = data.get("confirm_password")
             phone = data.get("phone")
             role = data.get("role", "Employee")
             employee_id = data.get("employee_id")
@@ -31,6 +34,12 @@ def register_user(request):
         {"error": "Employee ID is required"},
         status=400
     )
+            
+            if password != confirm_password:
+                return JsonResponse(
+        {"error": "Passwords do not match"},
+        status=400
+    )
 
             if User.objects.filter(employee_id=employee_id).exists():
                 return JsonResponse(
@@ -40,10 +49,15 @@ def register_user(request):
 
             # Create user safely
             user = User.objects.create_user(
-                username=username,
-                email=email,
-                password=password,
-            )
+    username=username,
+    first_name=first_name,
+    last_name=last_name,
+    email=email,
+    password=password,
+    employee_id=employee_id,
+    phone=phone,
+    role=role,
+)
 
             # extra fields
             user.phone = phone

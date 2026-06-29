@@ -7,15 +7,16 @@ import Button from "../components/ui/Button";
 function RegisterEmployee() {
 
     const [formData, setFormData] = useState({
-        username: "",
-        first_name: "",
-        last_name: "",
-        email: "",
-        phone: "",
-        password: "",
-        confirm_password: "",
-        role: "Employee"
-    });
+    username: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    employee_id: "",
+    password: "",
+    confirm_password: "",
+    role: "Employee"
+});
 
     function handleChange(e) {
         setFormData({
@@ -24,13 +25,51 @@ function RegisterEmployee() {
         });
     }
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    async function handleSubmit(e) {
+    e.preventDefault();
 
-        console.log(formData);
-
-        // API call will go here later
+    if (formData.password !== formData.confirm_password) {
+        alert("Passwords do not match.");
+        return;
     }
+
+    try {
+        const response = await fetch("http://127.0.0.1:8000/api/register/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert(data.message);
+            console.log(data);
+
+            // Optional: Clear the form after successful registration
+            setFormData({
+                username: "",
+                first_name: "",
+                last_name: "",
+                email: "",
+                phone: "",
+                employee_id: "",
+                password: "",
+                confirm_password: "",
+                role: "Employee",
+            });
+
+        } else {
+            alert(data.error);
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Something went wrong.");
+    }
+}
 
     return (
         <form onSubmit={handleSubmit}>
@@ -67,6 +106,14 @@ function RegisterEmployee() {
                 onChange={handleChange}
                 required
             />
+
+            <Input
+    label="Employee ID"
+    name="employee_id"
+    value={formData.employee_id}
+    onChange={handleChange}
+    required
+/>
 
             <Input
                 label="Phone"
