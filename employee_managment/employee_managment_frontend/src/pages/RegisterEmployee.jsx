@@ -82,9 +82,7 @@ function RegisterEmployee() {
                     </h1>
 
                     <p className="text-blue-100 leading-7 text-lg">
-                        Register new employees, manage departments,
-                        monitor attendance, and organize your workforce
-                        from one place.
+                        Register new employees and Management
                     </p>
 
                 </div>
