@@ -66,10 +66,13 @@ function RegisterEmployee() {
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-6">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden grid md:grid-cols-2">
+
         {/* Left Side */}
-        <div className="hidden md:flex flex-col justify-center bg-blue-600 text-white p-12">
-          <h1 className="text-4xl font-bold mb-4">Employee Management</h1>
-          <p className="text-blue-100 leading-7 text-lg">
+        <div className="hidden md:flex flex-col justify-center bg-[#0A3B57] text-white p-12">
+          <h1 className="text-4xl font-bold text-white">
+    Employee Management
+</h1>
+          <p className="text-slate-300 mt-4 leading-7">
             Register new employees and manage your workforce
           </p>
         </div>
