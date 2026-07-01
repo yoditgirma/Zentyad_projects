@@ -11,18 +11,7 @@ export default function Button({
             onClick={onClick}
             disabled={disabled}
             className={`
-                w-full
-                px-4
-                py-2.5
-                rounded-lg
-                font-medium
-                text-white
-                bg-blue-600
-                hover:bg-blue-700
-                active:bg-blue-800
-                transition
-                disabled:opacity-50
-                disabled:cursor-not-allowed
+                w-full mt-4 bg-[#33CC1A] hover:bg-[#29b816] text-white font-semibold py-3 rounded-xl transition-all duration-300
                 ${className}
             `}
         >
