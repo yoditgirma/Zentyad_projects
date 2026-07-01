@@ -1,7 +1,17 @@
-import RegisterEmployee from "./pages/RegisterEmployee";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login';
+import RegisterEmployee from './pages/RegisterEmployee';
 
 function App() {
-  return <RegisterEmployee />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<RegisterEmployee />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

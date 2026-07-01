@@ -17,9 +17,9 @@ export default function Button({
                 rounded-lg
                 font-medium
                 text-white
-                bg-blue-600
-                hover:bg-blue-700
-                active:bg-blue-800
+                bg-[#2FC61F]
+                hover:bg-[#26a818]
+                active:bg-[#1f8a13]
                 transition
                 disabled:opacity-50
                 disabled:cursor-not-allowed
