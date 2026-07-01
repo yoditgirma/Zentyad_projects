@@ -1,27 +1,33 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { authService } from '../services/authService';
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    // Simulate login for testing
-    setTimeout(() => {
-      if (email && password.length >= 6) {
-        alert('Login successful!');
-        setLoading(false);
+    try {
+      const response = await authService.login(email, password);
+      
+      // Redirect based on role
+      if (response.user.role === 'Admin') {
+        navigate('/admin-dashboard');
       } else {
-        setError('Invalid credentials. Please try again.');
-        setLoading(false);
+        navigate('/employee-dashboard');
       }
-    }, 1000);
+    } catch (error) {
+      setError(error.message || 'Invalid credentials. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -132,7 +138,7 @@ const styles = {
   },
   button: {
     padding: '12px',
-    backgroundColor: '#2FC61F', // Changed to green
+    backgroundColor: '#33CC1A',
     color: 'white',
     border: 'none',
     borderRadius: '6px',
@@ -155,7 +161,7 @@ const styles = {
     marginTop: '8px'
   },
   link: {
-    color: '#2FC61F', // Changed to green
+    color: '#33CC1A',
     textDecoration: 'none',
     fontWeight: '500'
   }

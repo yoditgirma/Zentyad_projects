@@ -1,8 +1,6 @@
 const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
 export const dashboardAPI = {
-    
-  // Admin Dashboard
   getAdminStats: async () => {
     const response = await fetch(`${API_BASE_URL}/admin-stats/`, {
       credentials: 'include',
@@ -19,8 +17,12 @@ export const dashboardAPI = {
     return response.json();
   },
 
-  getAllEmployees: async () => {
-    const response = await fetch(`${API_BASE_URL}/employees/`, {
+  getAllEmployees: async (search = '') => {
+    const url = search 
+      ? `${API_BASE_URL}/employees/?search=${encodeURIComponent(search)}`
+      : `${API_BASE_URL}/employees/`;
+      
+    const response = await fetch(url, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +37,6 @@ export const dashboardAPI = {
     return response.json();
   },
 
-  // Employee Dashboard
   getEmployeeStats: async () => {
     const response = await fetch(`${API_BASE_URL}/employee-stats/`, {
       credentials: 'include',
@@ -50,5 +51,19 @@ export const dashboardAPI = {
     }
     
     return response.json();
+  },
+
+  getCurrentUser: () => {
+    const userData = localStorage.getItem('user');
+    return userData ? JSON.parse(userData) : null;
+  },
+
+  isAuthenticated: () => {
+    return !!localStorage.getItem('user');
+  },
+
+  getUserRole: () => {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user).role : null;
   },
 };

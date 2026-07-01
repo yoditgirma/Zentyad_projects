@@ -2,7 +2,7 @@ import { authAPI } from '../api/auth';
 
 // Business logic for authentication
 export const authService = {
-    
+
   // Register with validation
   register: async (userData) => {
 
@@ -19,6 +19,36 @@ export const authService = {
     } catch (error) {
       throw error;
     }
+  },
+
+  // login function
+  login: async (email, password) => {
+    if (!email || !password) {
+      throw new Error('Email and password are required');
+    }
+    try {
+      const response = await authAPI.login({ email, password });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  logout: async () => {
+    await authAPI.logout();
+  },
+
+  isAuthenticated: () => {
+    return !!authAPI.getCurrentUser();
+  },
+
+  getUserRole: () => {
+    const user = authAPI.getCurrentUser();
+    return user?.role || null;
+  },
+
+  getCurrentUser: () => {
+    return authAPI.getCurrentUser();
   },
 };
 
