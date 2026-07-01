@@ -1,4 +1,4 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from  django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -49,15 +49,15 @@ def register_user(request):
 
             # Create user safely
             user = User.objects.create_user(
-    username=username,
-    first_name=first_name,
-    last_name=last_name,
-    email=email,
-    password=password,
-    employee_id=employee_id,
-    phone=phone,
-    role=role,
-)
+                username=username,
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                password=password,
+                employee_id=employee_id,
+                phone=phone,
+                role=role,
+            )
 
             # extra fields
             user.phone = phone
