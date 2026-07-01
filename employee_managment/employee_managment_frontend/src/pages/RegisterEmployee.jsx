@@ -72,17 +72,6 @@ function RegisterEmployee() {
           <p className="text-blue-100 leading-7 text-lg">
             Register new employees and manage your workforce
           </p>
-          <div className="mt-8 space-y-3">
-            <div className="flex items-center gap-3 text-blue-50">
-              <span>Secure registration</span>
-            </div>
-            <div className="flex items-center gap-3 text-blue-50">
-              <span>Role-based access</span>
-            </div>
-            <div className="flex items-center gap-3 text-blue-50">
-              <span>Real-time validation</span>
-            </div>
-          </div>
         </div>
 
         {/* Right Side */}
