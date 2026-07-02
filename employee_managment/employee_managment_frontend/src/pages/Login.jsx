@@ -17,7 +17,7 @@ function Login() {
     try {
       const response = await authService.login(email, password);
       
-      // Redirect based on role
+      
       if (response.user.role === 'Admin') {
         navigate('/admin-dashboard');
       } else {
