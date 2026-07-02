@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
 import Input from '../components/ui/Input';
 import Select from '../components/ui/Select';
 import Button from '../components/ui/Button';
 
 function RegisterEmployee() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
         first_name: '',
@@ -26,7 +28,6 @@ function RegisterEmployee() {
             ...formData,
             [e.target.name]: e.target.value,
         });
-        // Clear messages when user types
         setError('');
         setSuccess('');
     };
@@ -38,23 +39,28 @@ function RegisterEmployee() {
         setSuccess('');
 
         try {
-            // Use the service instead of direct API call
+            // Register the user
             const response = await authService.register(formData);
-
+            
             setSuccess(response.message || 'Registration successful!');
 
-            // Reset form
-            setFormData({
-                username: '',
-                first_name: '',
-                last_name: '',
-                email: '',
-                employee_id: '',
-                phone: '',
-                password: '',
-                confirm_password: '',
-                role: 'Employee',
-            });
+            // Auto-login after registration
+            try {
+                const loginResponse = await authService.login(formData.email, formData.password);
+                
+                // Redirect based on role
+                if (loginResponse.user?.role === 'Admin') {
+                    navigate('/admin-dashboard');
+                } else {
+                    navigate('/employee-dashboard');
+                }
+            } catch (loginError) {
+                // If auto-login fails, redirect to login page
+                setSuccess('Registration successful! Please login.');
+                setTimeout(() => {
+                    navigate('/login');
+                }, 2000);
+            }
 
         } catch (error) {
             setError(error.message || 'Registration failed. Please try again.');
@@ -89,13 +95,13 @@ function RegisterEmployee() {
                     {/* Success/Error Messages */}
                     {success && (
                         <div className="mb-4 p-3 bg-green-50 border border-green-200 text-green-700 rounded-lg">
-                            {success}
+                            ✅ {success}
                         </div>
                     )}
 
                     {error && (
                         <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">
-                            {error}
+                            ❌ {error}
                         </div>
                     )}
 
